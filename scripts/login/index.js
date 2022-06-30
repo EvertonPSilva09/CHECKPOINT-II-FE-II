@@ -14,11 +14,11 @@ let objetoUsuario = {
 
 let loginUsuarioJson = "";
 
-botaoLogin.addEventListener("click",function(evento) {
+botaoLogin.addEventListener("click", function (evento) {
 
 
     if (validaLogin(emailLogin.value, passwordLogin.value)) {
-        
+
         evento.preventDefault();
 
         /* Normalização*/
@@ -43,29 +43,29 @@ botaoLogin.addEventListener("click",function(evento) {
         }
 
         fetch("https://ctd-todo-api.herokuapp.com/v1/users/login", configRequest)
-        .then(
-            resultado => {
-                if (resultado.status == 201 || resultado.status == 200){
-                    return resultado.json();
-                } else{
-                    throw resultado;
-                }       
-            }
-        ).then(
-            resultado =>{
-                loginSucesso(resultado);
-            }
-
-        ).catch(
-            erro => {
-
-                if(erro.status == 400 || erro.status == 404){
-                    loginErro("Email e/ou senha inválidos");
+            .then(
+                resultado => {
+                    if (resultado.status == 201 || resultado.status == 200) {
+                        return resultado.json();
+                    } else {
+                        throw resultado;
+                    }
+                }
+            ).then(
+                resultado => {
+                    loginSucesso(resultado);
                 }
 
-            }
+            ).catch(
+                erro => {
 
-        );
+                    if (erro.status == 400 || erro.status == 404) {
+                        loginErro("Email e/ou senha inválidos");
+                    }
+
+                }
+
+            );
 
     } else {
         console.log("Login inválido");
@@ -89,7 +89,7 @@ async function loginApi() {
             let respostaFinal = await resposta.json();
 
             loginSucesso(respostaFinal);
-        }else{
+        } else {
             throw resposta;
         }
 

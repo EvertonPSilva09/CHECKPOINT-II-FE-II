@@ -12,11 +12,11 @@ let registerUser = {
     passwordReg: ""
 }
 
-registerButton.addEventListener("click", function(evento) {
-    
+registerButton.addEventListener("click", function (evento) {
+
     evento.preventDefault();
 
-    if (confirmRegistration(registrationName.value, registrationLastName.value, registratonEmail.value, registratonPassword.value)) {
+    if (confirmRegistration(registrationName.value, registrationLastName.value, registrationEmail.value, registrationPassword.value)) {
         evento.preventDefault();
 
         /* Normalização*/
@@ -29,7 +29,7 @@ registerButton.addEventListener("click", function(evento) {
         registerUser.lastNameReg = registrationLastName;
         registerUser.emailReg = registrationEmail;
         registerUser.passwordReg = registrationPasswordn;
-        
+
         let registerUserEmJson = JSON.stringify(registerUser);
 
         console.log(registerUserEmJson);
@@ -44,32 +44,32 @@ registerButton.addEventListener("click", function(evento) {
             body: registerUserEmJson
         }
         fetch("https://ctd-todo-api.herokuapp.com/v1/users/", configRequest)
-        .then(
-            resultado => {
-                if (resultado.status == 201 || resultado.status == 200){
-                    return resultado.json();
-                } else{
-                    throw resultado;
+            .then(
+                resultado => {
+                    if (resultado.status == 201 || resultado.status == 200) {
+                        return resultado.json();
+                    } else {
+                        throw resultado;
+                    }
+
                 }
-                
-            }
 
-        ).then(
-            resultado =>{
-                loginSucesso(resultadoSucesso);
-                console.log(resultado);
-            }
-
-        ).catch(
-            erro => {
-
-                if(erro.status == 400 || erro.status == 500){
-                    loginErro("Usuário já cadastrado/Algum dado está incompleto");
+            ).then(
+                resultado => {
+                    loginSucesso(resultadoSucesso);
+                    console.log(resultado);
                 }
-                console.log(erro);
-            }
 
-        );
+            ).catch(
+                erro => {
+
+                    if (erro.status == 400 || erro.status == 500) {
+                        loginErro("Usuário já cadastrado/Algum dado está incompleto");
+                    }
+                    console.log(erro);
+                }
+
+            );
 
     } else {
         console.log("Erro de servidor");

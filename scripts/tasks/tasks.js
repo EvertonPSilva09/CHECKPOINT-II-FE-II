@@ -53,10 +53,29 @@ async function buscaTarefasUsuario() {
         let resposta = await fetch("https://ctd-todo-api.herokuapp.com/v1/tasks", configRequest);
 
         let respostaConvertida = await resposta.json();
-        console.log(respostaConvertida);
+        exibeTarefasUsuario(respostaConvertida);
 
     } catch (erro) {
         console.log(erro);
+    }
+}
+
+
+function exibeTarefasUsuario(objetoTarefa) {
+    let capturaDivTarefas = document.getElementById("lista");
+    for (i of objetoTarefa) {
+       let data = new Date(i.createdAt)
+       let dataConvertida = data.toLocaleDateString()
+        let listaUsuario = `
+        <li class="tarefa">
+        <div class="not-done"></div>
+        <div class="descricao">
+          <p class="nome">${i.description}</p>
+          <p class="timestamp">Criada em: ${dataConvertida}</p>
+        </div>
+      </li>`
+    
+      capturaDivTarefas.innerHTML += listaUsuario
     }
 }
 

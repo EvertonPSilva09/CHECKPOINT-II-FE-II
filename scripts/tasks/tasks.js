@@ -91,11 +91,11 @@ taskButton.addEventListener("click", function (evento) {
     evento.preventDefault();
     if (inputTask.value) {
         evento.preventDefault();
-        RegistraTask()
+        RegistraTask();
 
 
     } else {
-        console.log("erro")
+        console.log("erro");
     }
 })
 

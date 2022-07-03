@@ -6,79 +6,109 @@ let registrationPassword = document.getElementById('password');
 let registerButton = document.getElementById('register');
 
 let registerUser = {
-    nameReg: "",
-    lastNameReg: "",
-    emailReg: "",
-    passwordReg: ""
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: ""
 }
+
 
 registerButton.addEventListener("click", function (evento) {
 
     evento.preventDefault();
 
-    if (confirmRegistration(registrationName.value, registrationLastName.value, registrationEmail.value, registrationPassword.value)) {
-        evento.preventDefault();
+    /* Normalização*/
+    registrationName = nomalizaTextoRetiraEspacos(registrationName.value);
+    registrationLastName = nomalizaTextoRetiraEspacos(registrationLastName.value);
+    registrationEmail = nomalizaTextoRetiraEspacos(registrationEmail.value);
+    registrationPassword = nomalizaTextoRetiraEspacos(registrationPassword.value);
 
-        /* Normalização*/
-        registrationName = nomalizaTextoRetiraEspacos(registrationName.value);
-        registrationLastName = nomalizaTextoRetiraEspacos(registrationLastName.value);
-        registrationEmail = nomalizaTextoRetiraEspacos(registrationEmail.value);
-        registrationPassword = nomalizaTextoRetiraEspacos(registrationPassword.value);
+    registerUser.firstName = registrationName;
+    registerUser.lastName = registrationLastName;
+    registerUser.email = registrationEmail;
+    registerUser.password = registrationPassword;
 
-        registerUser.nameReg = registrationName;
-        registerUser.lastNameReg = registrationLastName;
-        registerUser.emailReg = registrationEmail;
-        registerUser.passwordReg = registrationPasswordn;
+    //registraUsuario()
 
-        let registerUserEmJson = JSON.stringify(registerUser);
+    //Comunicando com API
 
-        console.log(registerUserEmJson);
+    let registerUserEmJson = JSON.stringify(registerUser);
+    console.log(registerUserEmJson);
 
-        //Comunicando com API
+    let configRequest = {
+        method: "POST",
+        headers: {
+            "Content-type": "Application/json"
+        },
+        body: registerUserEmJson
+    }
+    fetch("https://ctd-todo-api.herokuapp.com/v1/users/", configRequest)
+        .then(
+            resultado => {
+                if (resultado.status == 201 || resultado.status == 200) {
+                    return resultado.json();
+                } else {
+                    throw resultado;
+                }
+            }
+        ).then(
+            resultado => {
+                registrationSucess(resultado);
+            }
+).catch(
+    erro => {
 
-        let configRequest = {
-            method: "POST",
-            headers: {
-                "Content-type": "Application/json"
-            },
-            body: registerUserEmJson
+        if (erro.status == 400 || erro.status == 500) {
+            alert("Usuário já cadastrado/Algum dado está incompleto");
         }
-        fetch("https://ctd-todo-api.herokuapp.com/v1/users/", configRequest)
-            .then(
-                resultado => {
-                    if (resultado.status == 201 || resultado.status == 200) {
-                        return resultado.json();
-                    } else {
-                        throw resultado;
-                    }
-
-                }
-
-            ).then(
-                resultado => {
-                    loginSucesso(resultadoSucesso);
-                    console.log(resultado);
-                }
-
-            ).catch(
-                erro => {
-
-                    if (erro.status == 400 || erro.status == 500) {
-                        loginErro("Usuário já cadastrado/Algum dado está incompleto");
-                    }
-                    console.log(erro);
-                }
-
-            );
-
-    } else {
-        console.log("Erro de servidor");
+        console.log(erro);
     }
 
+)
 });
 
+
+/*async function registraUsuario() {
+
+     //Comunicando com API
+     
+     let registerUserEmJson = JSON.stringify(registerUser);
+     console.log(registerUserEmJson);
+
+     let configRequest = {
+        method: "POST",
+        headers: {
+            "Content-type": "Application/json"
+        },
+        body: registerUserEmJson
+    }
+
+    try {
+
+        let resposta = await fetch("https://ctd-todo-api.herokuapp.com/v1/users/", configRequest)
+            
+        
+         if (resposta.status == 200) {
+            let respostaConvertida = await resposta.json();
+            registrationSucess(respostaConvertida)
+         }else {
+            throw resposta
+         }
+    } catch (erro) {
+        if (erro.status == 400 || erro.status == 500) {
+            alert("Usuário já cadastrado/Algum dado está incompleto");
+        }
+    }
+
+}*/
+
 function registrationSucess(resultSucess) {
+
     console.log(resultSucess);
+
+    sessionStorage.setItem("jwt", resultSucess.jwt);
+
+    location.href = "tarefas.html";
 
 }
 
@@ -132,7 +162,7 @@ function validRegistration(emailReg, passwordReg) {
         //True
         registerButton.removeAttribute("disabled");
         registerButton.style.backgroundColor = "#7898ff";
-        registerButton.innerText = "Acessar";
+        registerButton.innerText = "Cadastrar";
 
         return true;
 

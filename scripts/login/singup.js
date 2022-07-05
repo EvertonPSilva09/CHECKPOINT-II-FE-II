@@ -55,16 +55,16 @@ registerButton.addEventListener("click", function (evento) {
             resultado => {
                 registrationSucess(resultado);
             }
-).catch(
-    erro => {
+        ).catch(
+            erro => {
 
-        if (erro.status == 400 || erro.status == 500) {
-            alert("Usuário já cadastrado/Algum dado está incompleto");
-        }
-        console.log(erro);
-    }
+                if (erro.status == 400 || erro.status == 500) {
+                    alert("Usuário já cadastrado/Algum dado está incompleto");
+                }
+                console.log(erro);
+            }
 
-)
+        )
 });
 
 

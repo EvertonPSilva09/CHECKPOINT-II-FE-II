@@ -55,6 +55,8 @@ async function buscaTarefasUsuario() {
         let respostaConvertida = await resposta.json();
         exibeTarefasUsuario(respostaConvertida);
 
+        console.log(respostaConvertida);
+
     } catch (erro) {
         console.log(erro);
     }
@@ -63,21 +65,52 @@ async function buscaTarefasUsuario() {
 
 function exibeTarefasUsuario(objetoTarefa) {
     let capturaDivTarefas = document.getElementById("lista");
-    for (i of objetoTarefa) {
-        let data = new Date(i.createdAt)
-        let dataConvertida = data.toLocaleDateString()
-        let listaUsuario = `
-        <li class="tarefa">
-        <div class="not-done"></div>
-        <div class="descricao">
-          <p class="nome">${i.description}</p>
-          <p class="timestamp">Criada em: ${dataConvertida}</p>
-        </div>
-      </li>`
+    let capturaDivTarefasPendentes = document.querySelector(".tarefas-terminadas");
 
-        capturaDivTarefas.innerHTML += listaUsuario
+
+
+    for (i of objetoTarefa) {
+
+        let status = i.completed
+
+        if (status == true) {
+            //
+            let data = new Date(i.createdAt)
+            let dataConvertida = data.toLocaleDateString()
+            let listaUsuario = `
+            <li class="tarefa">
+                <div class="done"></div>
+                <div class="descricao">
+                    <p class="nome">${i.description}</p>
+                    <div>
+                        <button><i id="${i.id}" class="fas fa-undo-alt change"></i></button>
+                        <button><i id="${i.id}" class="far fa-trash-alt"></i></button>
+                    </div>
+              </div>
+          </li>`
+
+            capturaDivTarefasPendentes.innerHTML += listaUsuario
+
+        } else {
+            let data = new Date(i.createdAt)
+            let dataConvertida = data.toLocaleDateString()
+            let listaUsuario = `
+            <li class="tarefa">
+                <div class="not-done"></div>
+                <div class="descricao">
+                    <p class="nome">${i.description}</p>
+                    <p class="timestamp">Criada em: ${dataConvertida}</p>
+                </div>
+          </li>`
+
+            capturaDivTarefas.innerHTML += listaUsuario
+        }
+
+
+
     }
 }
+
 
 let inputTask = document.querySelector("#novaTarefa");
 let taskButton = document.getElementById('taskButton');
@@ -150,6 +183,9 @@ async function RegistraTask() {
 
 
 }
+
+
+
 
 
 

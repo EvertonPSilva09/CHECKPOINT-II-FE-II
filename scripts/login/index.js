@@ -42,6 +42,10 @@ botaoLogin.addEventListener("click", function (evento) {
             body: objetoUsuarioEmJson
         }
 
+//chamando o loader sppiner
+    exibeSpinner();
+ 
+
         fetch("https://ctd-todo-api.herokuapp.com/v1/users/login", configRequest)
             .then(
                 resultado => {
@@ -53,7 +57,9 @@ botaoLogin.addEventListener("click", function (evento) {
                 }
             ).then(
                 resultado => {
-                    loginSucesso(resultado);
+                    setTimeout(() => {
+                        loginSucesso(resultado)
+                    }, 1500);
                 }
 
             ).catch(
@@ -61,6 +67,7 @@ botaoLogin.addEventListener("click", function (evento) {
 
                     if (erro.status == 400 || erro.status == 404) {
                         loginErro("Email e/ou senha inválidos");
+                        
                     }
 
                 }
@@ -73,7 +80,7 @@ botaoLogin.addEventListener("click", function (evento) {
 
 });
 
-async function loginApi() {
+/*async function loginApi() {
     let configRequest = {
         method: "POST",
         headers: {
@@ -97,9 +104,10 @@ async function loginApi() {
 
         if (erro.status == 400 || erro.status == 404) {
             loginErro("Email e/ou senha inválidos")
+            
         }
     }
-}
+}*/
 
 function loginSucesso(resultadoSucesso) {
     console.log(resultadoSucesso);
@@ -107,14 +115,20 @@ function loginSucesso(resultadoSucesso) {
     //salvando o token
     sessionStorage.setItem("jwt", resultadoSucesso.jwt);
 
+    //document.cookie = `jwt=${resultadoSucesso}`;
+        //retirar animaçao
+        ocultaSpinner();
+
     location.href = "tarefas.html";
+
 
 }
 
 function loginErro(resultadoErro) {
-
+    ocultaSpinner();
     console.log(resultadoErro);
     alert(resultadoErro);
+    
 }
 
 function validaLogin(email, password) {
@@ -131,8 +145,8 @@ function validaLogin(email, password) {
         botaoLogin.style.backgroundColor = "#979292A1";
         botaoLogin.innerText = "Bloqueado"
         botaoLogin.setAttribute("disabled", true)
-
         return false;
+       
 
     }
 }

@@ -47,7 +47,7 @@
 
   <form class="nova-tarefa">
     
-    <div class="not-done "></div>
+    <div class="not-done"></div>
     
     <input id="novaTarefa" type="text" placeholder="Nova tarefa" required>
     <small id="validaTarefa"></small>
@@ -62,6 +62,13 @@
   <ul class="tarefas-pendentes">
     <!-- <div id="skeleton"> -->
     <div id="lista">
+      <li class="tarefa">
+        <div class="not-done">a</div>
+        <div class="descricao">
+            <p class="nome">${i.description}</p>
+            <p class="timestamp">Criada em: ${dataConvertida}</p>
+        </div>
+  </li>
 
     </div>
   </ul>

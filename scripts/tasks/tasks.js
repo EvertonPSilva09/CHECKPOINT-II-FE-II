@@ -62,10 +62,9 @@ async function buscaTarefasUsuario() {
     }
 }
 
-
 function exibeTarefasUsuario(objetoTarefa) {
     let capturaDivTarefas = document.getElementById("lista");
-    let capturaDivTarefasPendentes = document.querySelector(".tarefas-terminadas");
+    let capturaDivTarefasTerminadas = document.querySelector(".tarefas-terminadas");
 
 
 
@@ -75,8 +74,6 @@ function exibeTarefasUsuario(objetoTarefa) {
 
         if (status == true) {
             //
-            let data = new Date(i.createdAt)
-            let dataConvertida = data.toLocaleDateString()
             let listaUsuario = `
             <li class="tarefa">
                 <div class="done"></div>
@@ -89,14 +86,14 @@ function exibeTarefasUsuario(objetoTarefa) {
               </div>
           </li>`
 
-            capturaDivTarefasPendentes.innerHTML += listaUsuario
+            capturaDivTarefasTerminadas.innerHTML += listaUsuario
 
         } else {
             let data = new Date(i.createdAt)
             let dataConvertida = data.toLocaleDateString()
             let listaUsuario = `
             <li class="tarefa">
-                <div class="not-done"></div>
+                <div class="not-done" id=${i.id}></div>
                 <div class="descricao">
                     <p class="nome">${i.description}</p>
                     <p class="timestamp">Criada em: ${dataConvertida}</p>
@@ -104,12 +101,13 @@ function exibeTarefasUsuario(objetoTarefa) {
           </li>`
 
             capturaDivTarefas.innerHTML += listaUsuario
+    
+              }
         }
 
 
 
     }
-}
 
 
 let inputTask = document.querySelector("#novaTarefa");
@@ -117,7 +115,7 @@ let taskButton = document.getElementById('taskButton');
 
 let newTask = {
     description: "",
-    completed: false
+    completed: true
 }
 
 taskButton.addEventListener("click", function (evento) {
@@ -183,6 +181,8 @@ async function RegistraTask() {
 
 
 }
+
+
 
 
 

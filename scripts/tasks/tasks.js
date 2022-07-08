@@ -66,11 +66,14 @@ function exibeTarefasUsuario(objetoTarefa) {
     let capturaDivTarefas = document.getElementById("lista");
     let capturaDivTarefasTerminadas = document.querySelector(".tarefas-terminadas");
 
-
+    
 
     for (i of objetoTarefa) {
-
+        
         let status = i.completed
+        let descricaoTarefa = i.description
+
+        console.log(descricaoTarefa);
 
         if (status == true) {
             //
@@ -78,7 +81,7 @@ function exibeTarefasUsuario(objetoTarefa) {
             <li class="tarefa">
                 <div class="done"></div>
                 <div class="descricao">
-                    <p class="nome">${i.description}</p>
+                    <p class="nome">${descricaoTarefa}</p>
                     <div>
                         <button><i id="${i.id}" class="fas fa-undo-alt change"></i></button>
                         <button><i id="${i.id}" class="far fa-trash-alt"></i></button>
@@ -93,29 +96,90 @@ function exibeTarefasUsuario(objetoTarefa) {
             let dataConvertida = data.toLocaleDateString()
             let listaUsuario = `
             <li class="tarefa">
-                <div class="not-done" id=${i.id}></div>
+                <div class="not-done" onclick="alterarStatus(${i.id}, ${true})"></div>
                 <div class="descricao">
-                    <p class="nome">${i.description}</p>
+                    <p id="descricaoTarefa" class="nome">${descricaoTarefa}</p>
                     <p class="timestamp">Criada em: ${dataConvertida}</p>
                 </div>
           </li>`
 
             capturaDivTarefas.innerHTML += listaUsuario
-    
-              }
+
         }
-
-
-
     }
 
+}
+
+async function alterarStatus(tarefaId, statusTarefa) {
+
+    let capturaDescricaoTarefa = document.getElementById("descricaoTarefa").innerHTML;
+    console.log(capturaDescricaoTarefa);
+
+    console.log(tarefaId);
+
+    /*let updateTarefa = {
+        description: descricaoTarefa,
+        completed: statusTarefa
+    }*/
+
+    /*console.log(updateTarefa);
+
+
+    /*let converteStatusEmJson = JSON.stringify(updateTarefa);
+
+
+    let configRequest = {
+        method: "PUT",
+        headers: {
+            "Authorization": tokenJwt,
+            "Content-type": "Application/json"
+        },
+        body: converteStatusEmJson
+    }
+
+    try {
+        let resposta = await fetch("https://ctd-todo-api.herokuapp.com/v1/tasks/", configRequest);
+
+        if (resposta.status == 200) {
+            alert("NOIS É BRABO");
+            document.location.reload();
+        } else {
+            throw resposta;
+        }
+        //let respostaConvertida = await resposta.json();
+        //exibeTarefasUsuario(respostaConvertida);
+
+    } catch (erro) {
+        if (erro.status == 400 || erro.status == 401 || erro.status == 404 || erro.status == 500) {
+            alert("Tarefa não adicionada");
+            document.location.reload();
+        }
+    }*/
+
+}
+
+/*async function changeStatus(){
+    
+    
+
+    let converteStatusEmJson = JSON.stringify()
+    
+    let configRequest = {
+        method: "PUT",
+        headers: {
+            "Authorization": tokenJwt,
+            "Content-type": "Application/json"
+        },
+        body: 
+    }
+}*/
 
 let inputTask = document.querySelector("#novaTarefa");
 let taskButton = document.getElementById('taskButton');
 
 let newTask = {
     description: "",
-    completed: true
+    completed: false
 }
 
 taskButton.addEventListener("click", function (evento) {

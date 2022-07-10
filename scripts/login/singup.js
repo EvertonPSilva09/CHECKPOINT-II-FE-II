@@ -6,6 +6,9 @@ let registrationPassword2 = document.getElementById('password2')
 
 let registerButton = document.getElementById('register');
 
+registerButton.style.backgroundColor = "#979292A1"
+registerButton.innerText = "Bloqueado";
+
 let registerUser = {
     firstName: "",
     lastName: "",
@@ -16,56 +19,60 @@ let registerUser = {
 
 registerButton.addEventListener("click", function (evento) {
 
-    evento.preventDefault();
+    if (validRegistration(registrationEmail.value.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/), registrationPassword.value, registrationPassword2.value)) {
+        evento.preventDefault();
 
-    /* Normalização*/
-    registrationName = nomalizaTextoRetiraEspacos(registrationName.value);
-    registrationLastName = nomalizaTextoRetiraEspacos(registrationLastName.value);
-    registrationEmail = nomalizaTextoRetiraEspacos(registrationEmail.value);
-    registrationPassword = nomalizaTextoRetiraEspacos(registrationPassword.value);
+        /* Normalização*/
+        registrationName = nomalizaTextoRetiraEspacos(registrationName.value);
+        registrationLastName = nomalizaTextoRetiraEspacos(registrationLastName.value);
+        registrationEmail = nomalizaTextoRetiraEspacos(registrationEmail.value);
+        registrationPassword = nomalizaTextoRetiraEspacos(registrationPassword.value);
 
-    registerUser.firstName = registrationName;
-    registerUser.lastName = registrationLastName;
-    registerUser.email = registrationEmail;
-    registerUser.password = registrationPassword;
+        registerUser.firstName = registrationName;
+        registerUser.lastName = registrationLastName;
+        registerUser.email = registrationEmail;
+        registerUser.password = registrationPassword;
 
-    //registraUsuario()
+        //registraUsuario()
 
-    //Comunicando com API
+        //Comunicando com API
 
-    let registerUserEmJson = JSON.stringify(registerUser);
-    console.log(registerUserEmJson);
+        let registerUserEmJson = JSON.stringify(registerUser);
+        console.log(registerUserEmJson);
 
-    let configRequest = {
-        method: "POST",
-        headers: {
-            "Content-type": "Application/json"
-        },
-        body: registerUserEmJson
+        let configRequest = {
+            method: "POST",
+            headers: {
+                "Content-type": "Application/json"
+            },
+            body: registerUserEmJson
+        }
+        fetch("https://ctd-fe2-todo-v2.herokuapp.com/v1/users/", configRequest)
+            .then(
+                resultado => {
+                    if (resultado.status == 201 || resultado.status == 200) {
+                        return resultado.json();
+                    } else {
+                        throw resultado;
+                    }
+                }
+            ).then(
+                resultado => {
+                    registrationSucess(resultado);
+                }
+            ).catch(
+                erro => {
+
+                    if (erro.status == 400 || erro.status == 500) {
+                        alert("Usuário já cadastrado/Algum dado está incompleto");
+                    }
+                    console.log(erro);
+                }
+
+            )
+    } else {
+        alert("Senha divergente")
     }
-    fetch("https://ctd-fe2-todo-v2.herokuapp.com/v1/users/", configRequest)
-        .then(
-            resultado => {
-                if (resultado.status == 201 || resultado.status == 200) {
-                    return resultado.json();
-                } else {
-                    throw resultado;
-                }
-            }
-        ).then(
-            resultado => {
-                registrationSucess(resultado);
-            }
-        ).catch(
-            erro => {
-
-                if (erro.status == 400 || erro.status == 500) {
-                    alert("Usuário já cadastrado/Algum dado está incompleto");
-                }
-                console.log(erro);
-            }
-
-        )
 });
 
 function registrationSucess(resultSucess) {
@@ -85,7 +92,7 @@ registrationEmail.addEventListener("keyup", () => {
 
     let emailValidation = document.getElementById("emailValidation");
 
-    if (registrationEmail.value.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
+    if (registrationEmail.value.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/)) {
         emailValidation.innerText = ""
         registrationEmail.style.border = "2px solid transparent"
 
@@ -97,7 +104,7 @@ registrationEmail.addEventListener("keyup", () => {
 
     }
 
-    validRegistration(registrationEmail.value.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/), registrationPassword.value == registrationPassword2.value);
+    //validRegistration(registrationEmail.value.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/), registrationPassword.value == registrationPassword2.value);
 
 });
 
@@ -116,7 +123,6 @@ registrationPassword.addEventListener("keyup", () => {
         registrationPassword.style.border = "2px solid #E9554EBB"
 
     }
-    validRegistration(registrationEmail.value.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/), registrationPassword.value == registrationPassword2.value);
 
 });
 
@@ -128,13 +134,13 @@ registrationPassword2.addEventListener("keyup", () => {
         passwordValidation2.innerText = ""
         registrationPassword2.style.border = "2px solid transparent"
 
-    } else if (registrationPassword2.value != registrationPassword.value){
+    } else if (registrationPassword2.value != registrationPassword.value) {
 
-        passwordValidation2.innerText = "Senhas divergente"
+        passwordValidation2.innerText = "Senha divergente"
         passwordValidation2.style.color = "#E9554EBB"
         registrationPassword2.style.border = "2px solid #E9554EBB"
 
-    } else if (registrationPassword2.value && registrationPassword.value == null){
+    } else if (registrationPassword2.value && registrationPassword.value == null) {
         passwordValidation2.innerText = "Campo obrigatorio"
         passwordValidation2.style.color = "#E9554EBB"
         registrationPassword2.style.border = "2px solid #E9554EBB"
@@ -143,12 +149,12 @@ registrationPassword2.addEventListener("keyup", () => {
         passwordValidation2.style.color = "#E9554EBB"
         registrationPassword2.style.border = "2px solid #E9554EBB"
     }
-    validRegistration(registrationEmail.value.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/), registrationPassword.value == registrationPassword2.value);
-
+    validRegistration(registrationEmail.value.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/), registrationPassword.value, registrationPassword2.value);
 });
 
 function validRegistration(emailReg, passwordReg, passwordReg2) {
-    if (emailReg && passwordReg && passwordReg2) {
+
+    if (emailReg && passwordReg == passwordReg2) {
         //True
         registerButton.style.backgroundColor = "#7898ff";
         registerButton.innerText = "Cadastrar";

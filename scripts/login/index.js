@@ -117,7 +117,6 @@ function loginSucesso(resultadoSucesso) {
     //salvando o token
     sessionStorage.setItem("jwt", resultadoSucesso.jwt);
 
-    //document.cookie = `jwt=${resultadoSucesso}`;
         //retirar animaçao
         ocultaSpinner();
 
@@ -199,6 +198,6 @@ passwordLogin.addEventListener("keyup", () => {
         passwordLogin.style.border = "2px solid transparent"
 
     }
-    validaLogin(emailLogin.value.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/), passwordLogin.value);
+    validaLogin(emailLogin.value.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/), passwordLogin.value);
 
 });

@@ -8,7 +8,7 @@
  <a href="#">Regina</a> | 
  <a href="https://www.linkedin.com/in/roger-ricco-rogerio-p-silva-5a888060/" target="_blank">Rogério P. Silva</a>
  </p>
- 
+ <h3><a href="https://evertonpsilva09.github.io/CHECKPOINT-II-FE-II/" target="_blank"> 🌐 Teste aqui</a></h3>
  <h3><a href="https://documenter.getpostman.com/view/21601485/UzJQotPJ" target="_blank"> 📚 Documentação </a></h2>
  </div>
 

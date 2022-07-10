@@ -42,6 +42,7 @@ input {
   border-radius: .2em;
 }
 
+
 input:focus {
   outline: none;
   border: 1px solid lightgrey;

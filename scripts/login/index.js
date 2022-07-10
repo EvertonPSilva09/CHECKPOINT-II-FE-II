@@ -67,6 +67,7 @@ botaoLogin.addEventListener("click", function (evento) {
 
                     if (erro.status == 400 || erro.status == 404) {
                         loginErro("Email e/ou senha inválidos");
+                        document.location.reload();
                         
                     }
 
@@ -76,6 +77,7 @@ botaoLogin.addEventListener("click", function (evento) {
 
     } else {
         console.log("Login inválido");
+        document.location.reload();
     }
 
 });
@@ -90,7 +92,7 @@ botaoLogin.addEventListener("click", function (evento) {
     }
 
     try {
-        let resposta = await fetch("https://ctd-todo-api.herokuapp.com/v1/users/login", configRequest);
+        let resposta = await fetch("https://ctd-fe2-todo-v2.herokuapp.com/v1/users/login", configRequest);
 
         if (resposta.status == 201) {
             let respostaFinal = await resposta.json();
@@ -145,6 +147,7 @@ function validaLogin(email, password) {
         botaoLogin.style.backgroundColor = "#979292A1";
         botaoLogin.innerText = "Bloqueado"
         botaoLogin.setAttribute("disabled", true)
+        
         return false;
        
 
@@ -193,7 +196,7 @@ passwordLogin.addEventListener("keyup", () => {
     } else {
 
         validacaoSenha.innerText = ""
-        passwordLogin.style.color = "2px solid transparent"
+        passwordLogin.style.border = "2px solid transparent"
 
     }
     validaLogin(emailLogin.value.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/), passwordLogin.value);

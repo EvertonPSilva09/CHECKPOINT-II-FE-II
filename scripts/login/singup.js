@@ -2,6 +2,7 @@ let registrationName = document.getElementById('name');
 let registrationLastName = document.getElementById('lastName');
 let registrationEmail = document.getElementById('email');
 let registrationPassword = document.getElementById('password');
+let registrationPassword2 = document.getElementById('password2')
 
 let registerButton = document.getElementById('register');
 
@@ -67,49 +68,12 @@ registerButton.addEventListener("click", function (evento) {
         )
 });
 
-
-/*async function registraUsuario() {
-
-     //Comunicando com API
-     
-     let registerUserEmJson = JSON.stringify(registerUser);
-     console.log(registerUserEmJson);
-
-     let configRequest = {
-        method: "POST",
-        headers: {
-            "Content-type": "Application/json"
-        },
-        body: registerUserEmJson
-    }
-
-    try {
-
-        let resposta = await fetch("https://ctd-todo-api.herokuapp.com/v1/users/", configRequest)
-            
-        
-         if (resposta.status == 200) {
-            let respostaConvertida = await resposta.json();
-            registrationSucess(respostaConvertida)
-         }else {
-            throw resposta
-         }
-    } catch (erro) {
-        if (erro.status == 400 || erro.status == 500) {
-            alert("Usuário já cadastrado/Algum dado está incompleto");
-        }
-    }
-
-}*/
-
 function registrationSucess(resultSucess) {
-
-    console.log(resultSucess);
 
     sessionStorage.setItem("jwt", resultSucess.jwt);
 
     location.href = "tarefas.html";
-
+    alert("Usuário cadastrado com sucesso!")
 }
 
 function registrationErro(resultErro) {
@@ -133,13 +97,12 @@ registrationEmail.addEventListener("keyup", () => {
 
     }
 
-    validRegistration(registrationEmail.value.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/), registrationPassword.value);
+    validRegistration(registrationEmail.value.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/), registrationPassword.value == registrationPassword2.value);
 
 });
 
 registrationPassword.addEventListener("keyup", () => {
     let passwordValidation = document.getElementById("passwordValidation");
-
 
     if (registrationPassword.value) {
 
@@ -153,24 +116,51 @@ registrationPassword.addEventListener("keyup", () => {
         registrationPassword.style.border = "2px solid #E9554EBB"
 
     }
-    validRegistration(registrationEmail.value.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/), registrationPassword.value);
+    validRegistration(registrationEmail.value.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/), registrationPassword.value == registrationPassword2.value);
 
 });
 
-function validRegistration(emailReg, passwordReg) {
-    if (emailReg && passwordReg) {
+registrationPassword2.addEventListener("keyup", () => {
+    let passwordValidation2 = document.getElementById("passwordValidation2");
+
+    if (registrationPassword2.value == registrationPassword.value) {
+
+        passwordValidation2.innerText = ""
+        registrationPassword2.style.border = "2px solid transparent"
+
+    } else if (registrationPassword2.value != registrationPassword.value){
+
+        passwordValidation2.innerText = "Senhas divergente"
+        passwordValidation2.style.color = "#E9554EBB"
+        registrationPassword2.style.border = "2px solid #E9554EBB"
+
+    } else if (registrationPassword2.value && registrationPassword.value == null){
+        passwordValidation2.innerText = "Campo obrigatorio"
+        passwordValidation2.style.color = "#E9554EBB"
+        registrationPassword2.style.border = "2px solid #E9554EBB"
+    } else {
+        passwordValidation2.innerText = "Campo obrigatorio"
+        passwordValidation2.style.color = "#E9554EBB"
+        registrationPassword2.style.border = "2px solid #E9554EBB"
+    }
+    validRegistration(registrationEmail.value.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/), registrationPassword.value == registrationPassword2.value);
+
+});
+
+function validRegistration(emailReg, passwordReg, passwordReg2) {
+    if (emailReg && passwordReg && passwordReg2) {
         //True
-        registerButton.removeAttribute("disabled");
         registerButton.style.backgroundColor = "#7898ff";
         registerButton.innerText = "Cadastrar";
+        registerButton.removeAttribute("disabled");
 
         return true;
 
     } else {
         //False
-        registerButton.removeAttribute("disabled", true);
         registerButton.style.backgroundColor = "#979797";
         registerButton.innerText = "Bloqueado";
+        registerButton.removeAttribute("disabled", true);
 
         return false;
 

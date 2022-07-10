@@ -7,6 +7,7 @@ let botaoLogin = document.querySelector("#botaoLogin");
 botaoLogin.style.backgroundColor = "#979292A1"
 botaoLogin.innerText = "Bloqueado";
 
+// .............................Criando um objeto para armazenar email e senha...................................................
 let objetoUsuario = {
     email: "",
     password: ""
@@ -14,6 +15,7 @@ let objetoUsuario = {
 
 let loginUsuarioJson = "";
 
+// .............................Criando um objeto para armazenar email e senha...................................................
 botaoLogin.addEventListener("click", function (evento) {
 
 
@@ -45,6 +47,7 @@ botaoLogin.addEventListener("click", function (evento) {
 //chamando o loader sppiner
     exibeSpinner();
  
+// .............................Logando no site.......................................................................
 
         fetch("https://ctd-fe2-todo-v2.herokuapp.com/v1/users/login", configRequest)
             .then(
@@ -111,6 +114,7 @@ botaoLogin.addEventListener("click", function (evento) {
     }
 }*/
 
+//.............................Se o usuario consegue logar, armazena o token e retira a animação...................................................
 function loginSucesso(resultadoSucesso) {
     console.log(resultadoSucesso);
 
@@ -125,6 +129,8 @@ function loginSucesso(resultadoSucesso) {
 
 }
 
+// Se o usuario não consegue logar, avisa ele e retira a animação
+
 function loginErro(resultadoErro) {
     ocultaSpinner();
     console.log(resultadoErro);
@@ -132,6 +138,7 @@ function loginErro(resultadoErro) {
     
 }
 
+//..................................Analisa se o login e senha estão preenchido para alterar o comportamento do botão de acessar..........................
 function validaLogin(email, password) {
     if (email && password) {
         //True
@@ -152,6 +159,8 @@ function validaLogin(email, password) {
 
     }
 }
+
+//Analisa o campo de email
 
 emailLogin.addEventListener("keyup", () => {
 
@@ -177,6 +186,8 @@ emailLogin.addEventListener("keyup", () => {
     validaLogin(emailLogin.value.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/), emailLogin.value);
 
 });
+
+//Analisa o campo de senha
 
 passwordLogin.addEventListener("keyup", () => {
     emailLogin = document.querySelector("#inputEmail");

@@ -1,3 +1,5 @@
+
+//Capturando os elementos
 let registrationName = document.getElementById('name');
 let registrationLastName = document.getElementById('lastName');
 let registrationEmail = document.getElementById('email');
@@ -6,9 +8,11 @@ let registrationPassword2 = document.getElementById('password2')
 
 let registerButton = document.getElementById('register');
 
+//Alterando o comportamento do botão
 registerButton.style.backgroundColor = "#979292A1"
 registerButton.innerText = "Bloqueado";
 
+//Criando o objeto que vamos enviar para a API
 let registerUser = {
     firstName: "",
     lastName: "",
@@ -16,7 +20,7 @@ let registerUser = {
     password: ""
 }
 
-
+//Se comunicando com a api a partir do click no botão "registrar"
 registerButton.addEventListener("click", function (evento) {
 
     if (validRegistration(registrationEmail.value.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/), registrationPassword.value, registrationPassword2.value)) {
@@ -75,6 +79,7 @@ registerButton.addEventListener("click", function (evento) {
     }
 });
 
+//Se o usuário conseguir se registrar, armazenando o token, exibindo a mensagem de sucesso e redirecionando para a página de tarefas
 function registrationSucess(resultSucess) {
 
     sessionStorage.setItem("jwt", resultSucess.jwt);
@@ -83,10 +88,13 @@ function registrationSucess(resultSucess) {
     alert("Usuário cadastrado com sucesso!")
 }
 
+//
 function registrationErro(resultErro) {
-
+alert("Usuário não cadastrado")
     console.log(resultErro);
 }
+
+//Lógica para analisar se o e-mail é valido
 
 registrationEmail.addEventListener("keyup", () => {
 
@@ -108,6 +116,7 @@ registrationEmail.addEventListener("keyup", () => {
 
 });
 
+//Lógica para analisar a senha
 registrationPassword.addEventListener("keyup", () => {
     let passwordValidation = document.getElementById("passwordValidation");
 
@@ -152,6 +161,7 @@ registrationPassword2.addEventListener("keyup", () => {
     validRegistration(registrationEmail.value.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/), registrationPassword.value, registrationPassword2.value);
 });
 
+//Função para analisar se o registro (analisando o email e os campos de senha) é valido
 function validRegistration(emailReg, passwordReg, passwordReg2) {
 
     if (emailReg && passwordReg == passwordReg2) {

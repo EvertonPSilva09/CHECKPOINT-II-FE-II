@@ -220,7 +220,7 @@ async function alterarStatus(tarefaId) {
         let resposta = await fetch(`https://ctd-fe2-todo-v2.herokuapp.com/v1/tasks/${tarefaId}`, configRequest);
 
         if (resposta.status == 200) {
-            alert("Status alterado com Sucesso! Pendente");
+            alert("Status alterado com Sucesso!");
             document.location.reload();
         } else {
             throw resposta;
@@ -287,7 +287,7 @@ async function statusTask(tarefaId2) {
 //..............................Alterar descrição da Tarefa.......................................
 async function editTask(tarefaId, statusTarefas) {
 
-    let editDescricaoTarefa = prompt("Edite a descrição da sua tarefa.")
+    let editDescricaoTarefa = prompt("Edite a descrição da sua tarefa")
     if (editDescricaoTarefa != null) {
         document.getElementById(`editTask-${tarefaId}`)//.innerHTML
     }

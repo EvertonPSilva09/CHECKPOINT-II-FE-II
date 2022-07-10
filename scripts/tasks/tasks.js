@@ -338,7 +338,7 @@ async function editTask(tarefaId, statusTarefas){
 
 
 // .............................Deletar Tarefa...................................................
-async function deleteTarefa(tarefaId4, statusTarefas4){
+async function deleteTarefa(tarefaId4){
 //4 deleta a tarefa
     let delDescriptionTarefa =document.getElementsByClassName(`delete-${tarefaId4}`)
     console.log(delDescriptionTarefa.innerText);

@@ -46,7 +46,7 @@ botaoLogin.addEventListener("click", function (evento) {
     exibeSpinner();
  
 
-        fetch("https://ctd-todo-api.herokuapp.com/v1/users/login", configRequest)
+        fetch("https://ctd-fe2-todo-v2.herokuapp.com/v1/users/login", configRequest)
             .then(
                 resultado => {
                     if (resultado.status == 201 || resultado.status == 200) {

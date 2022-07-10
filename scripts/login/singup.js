@@ -42,7 +42,7 @@ registerButton.addEventListener("click", function (evento) {
         },
         body: registerUserEmJson
     }
-    fetch("https://ctd-todo-api.herokuapp.com/v1/users/", configRequest)
+    fetch("https://ctd-fe2-todo-v2.herokuapp.com/v1/users/", configRequest)
         .then(
             resultado => {
                 if (resultado.status == 201 || resultado.status == 200) {

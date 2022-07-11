@@ -5,7 +5,7 @@
 <a href="https://www.linkedin.com/in/evertonpdasilva/" target="_blank" rel="noopener noreferrer">Everton Silva</a> | 
  <a href="https://www.linkedin.com/in/larissa-santos-1a335795/" target="_blank" rel="noopener noreferrer">Larissa Santos</a> | 
  <a href="https://www.linkedin.com/in/raquel-janine-silva-579826149/" target="_blank" rel="noopener noreferrer">Raquel Silva</a> | 
- <a href="#">Regina</a> | 
+ <a href="https://www.linkedin.com/in/regina-celia-sobral-moraes-89b89912b/ target="_blank" rel="noopener noreferrer">Regina Moraes</a> | 
  <a href="https://www.linkedin.com/in/roger-ricco-rogerio-p-silva-5a888060/" target="_blank" rel="noopener noreferrer">Rogério P. Silva</a>
  </p>
  <h3><a href="https://evertonpsilva09.github.io/CHECKPOINT-II-FE-II/" target="_blank" rel="noopener noreferrer"> 🌐 Teste aqui</a></h3>

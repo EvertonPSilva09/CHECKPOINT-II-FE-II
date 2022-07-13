@@ -15,7 +15,7 @@ let objetoUsuario = {
 
 let loginUsuarioJson = "";
 
-// .............................Criando um objeto para armazenar email e senha...................................................
+// .............................Se comunicando com a API a partir do botão de login...................................................
 botaoLogin.addEventListener("click", function (evento) {
 
 

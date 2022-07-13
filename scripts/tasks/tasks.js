@@ -383,9 +383,14 @@ async function deleteTarefa(tarefaId4) {
 let logout = document.getElementById('closeApp')
 logout.addEventListener('click', () => {
     localStorage.removeItem('jwt')
-    alert('Sessão finalizada com sucesso!')
+    Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Logoff',
+        showConfirmButton: false,
+        timer: 1500
+      })
     setTimeout(() => {
         window.location.href = 'index.html'
-    })
-
+    }, 2500)
 })
